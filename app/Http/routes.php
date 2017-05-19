@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
+Route::get('/product/{slug}','IndexController@show');
+Route::get('/catalog','IndexController@index');
+
+
+
