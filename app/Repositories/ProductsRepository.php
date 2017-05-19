@@ -18,14 +18,26 @@ class ProductsRepository
         $this->model = $product;
     }
 
-    public function get($select = '*', $pagination = FALSE, $where = FALSE,$sort = FALSE)
+    public function get($select = '*',$take = FALSE, $pagination = FALSE, $where = FALSE,$sort = FALSE)
     {
         $builder = $this->model->select($select);
-        
-        $builder = $this->model->active();
+        if ($take) {
+            $builder->take($take);
+            
+        }
 
-        
-        dd($builder->get());
+        if ($where) {
+            $builder->where($where[0], $where[1]);
+        }
+        if($sort) {
+
+            $builder->orderBy('created_at','desc');
+        }
+
+        if ($pagination) {
+            return $builder->paginate($pagination);
+        }
+
         return $builder->get();
     }
 }

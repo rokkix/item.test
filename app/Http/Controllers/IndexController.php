@@ -19,12 +19,16 @@ class IndexController extends Controller
 
     public function index() {
         $catalogs = $this->getProducts();
+        return view(env('THEME').'.catalog')->with('products',$catalogs); 
+        
     }
     public function show($slug) {
 
     }
 
     public function getProducts() {
-        $catalogs = $this->p_rep->get();
+        $catalogs = $this->p_rep->get('*',2,1);
+        return $catalogs;
     }
+    
 }
