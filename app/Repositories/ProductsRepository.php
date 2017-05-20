@@ -18,15 +18,10 @@ class ProductsRepository
         $this->model = $product;
     }
 
-    public function get($select = '*', $take = FALSE, $pagination = FALSE, $sort = FALSE)
+    public function get($select = '*', $pagination = FALSE, $sort = FALSE)
     {
-       
+
         $builder = $this->model->select($select);
-        if ($take) {
-            $builder->take($take);
-
-        }
-
 
         if ($sort['sort'] == 'sort_date') {
 

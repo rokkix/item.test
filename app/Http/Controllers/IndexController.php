@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cache;
 use App\Product;
 use App\Repositories\ProductsRepository;
@@ -11,6 +12,7 @@ use App\Http\Requests;
 
 class IndexController extends Controller
 {
+
     protected $p_rep;
 
     public function __construct(ProductsRepository $p_rep)
@@ -40,7 +42,7 @@ class IndexController extends Controller
 
     public function show($slug)
     {
-        $product = Cache::rememberForever('product:'.$slug, function () use ($slug) {
+        $product = Cache::rememberForever('product:' . $slug, function () use ($slug) {
             $res = $this->p_rep->one($slug);
             return $res;
 
@@ -53,7 +55,7 @@ class IndexController extends Controller
 
     public function getProducts($sort)
     {
-        $catalogs = $this->p_rep->get('*', 2, 1, $sort);
+        $catalogs = $this->p_rep->get('*', Config::get('settings.paginate'), $sort);
         return $catalogs;
     }
 
