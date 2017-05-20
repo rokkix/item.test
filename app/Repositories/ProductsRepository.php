@@ -18,6 +18,12 @@ class ProductsRepository
         $this->model = $product;
     }
 
+    /**
+     * @param string $select
+     * @param bool $pagination
+     * @param bool $sort
+     * @return mixed
+     */
     public function get($select = '*', $pagination = FALSE, $sort = FALSE)
     {
 
@@ -45,6 +51,10 @@ class ProductsRepository
         return $builder->get();
     }
 
+    /**
+     * @param $slug
+     * @return mixed
+     */
     public function one($slug)
     {
         $builder = $this->model->select('*')->slug($slug);

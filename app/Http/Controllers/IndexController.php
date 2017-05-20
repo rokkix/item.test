@@ -15,12 +15,23 @@ class IndexController extends Controller
 
     protected $p_rep;
 
+    /**
+     * IndexController constructor.
+     * @param ProductsRepository $p_rep
+     */
+
     public function __construct(ProductsRepository $p_rep)
     {
         $this->p_rep = $p_rep;
     }
 
-    public function index(Request $request)
+
+    /**
+     * 
+     * @param Requests\ProductRequest $request
+     * @return $this
+     */
+    public function index(Requests\ProductRequest $request)
     {
         $sort = $request->only('sort');
 
@@ -30,7 +41,7 @@ class IndexController extends Controller
 
         });
 
-
+    //generate path if exist get parametr
         if (isset($sort['sort'])) {
 
             $catalogs->setPath('?sort=' . $sort['sort']);
@@ -40,6 +51,11 @@ class IndexController extends Controller
 
     }
 
+    /**
+     * get one product by slug
+     * @param $slug
+     * @return $this
+     */
     public function show($slug)
     {
         $product = Cache::rememberForever('product:' . $slug, function () use ($slug) {
@@ -53,6 +69,11 @@ class IndexController extends Controller
 
     }
 
+    /**
+     * return collection products sort by name or date
+     * @param $sort
+     * @return mixed
+     */
     public function getProducts($sort)
     {
         $catalogs = $this->p_rep->get('*', Config::get('settings.paginate'), $sort);
