@@ -18,20 +18,29 @@ class ProductsRepository
         $this->model = $product;
     }
 
-    public function get($select = '*',$take = FALSE, $pagination = FALSE, $where = FALSE,$sort = FALSE)
+    public function get($select = '*', $take = FALSE, $pagination = FALSE, $sort = FALSE)
     {
+       
         $builder = $this->model->select($select);
         if ($take) {
             $builder->take($take);
-            
+
         }
 
-        if ($where) {
-            $builder->where($where[0], $where[1]);
-        }
-        if($sort) {
 
-            $builder->orderBy('created_at','desc');
+        if ($sort['sort'] == 'sort_date') {
+
+            $builder->orderBy('created_at', 'desc');
+        }
+
+        if ($sort['sort'] == 'sort_name') {
+
+            $builder->orderBy('name');
+        }
+
+        if ($sort['sort'] == 'sort_name_desc') {
+
+            $builder->orderBy('name', 'desc');
         }
 
         if ($pagination) {
@@ -39,5 +48,13 @@ class ProductsRepository
         }
 
         return $builder->get();
+    }
+
+    public function one($slug)
+    {
+        $builder = $this->model->select('*')->slug($slug);
+        return $builder->first();
+
+
     }
 }

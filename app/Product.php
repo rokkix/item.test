@@ -15,9 +15,9 @@ class Product extends Model
     {
         return $query->where($name,'name');
     }
-
+    
     public function scopeSlug($query,$slug) {
-        return $query->where($slug,'slug');
+        return $query->where('slug',$slug);
     }
     
     

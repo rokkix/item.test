@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Product;
 use App\Repositories\ProductsRepository;
 use Illuminate\Http\Request;
 
@@ -17,18 +18,34 @@ class IndexController extends Controller
         $this->p_rep = $p_rep;
     }
 
-    public function index() {
-        $catalogs = $this->getProducts();
-        return view(env('THEME').'.catalog')->with('products',$catalogs); 
-        
-    }
-    public function show($slug) {
+    public function index(Request $request)
+    {
+        $sort = $request->only('sort');
+
+        $catalogs = $this->getProducts($sort);
+        $n = $request->only('sort');
+        if (isset($n['sort'])) {
+
+            $catalogs->setPath('?sort=' . $n['sort']);
+        }
+
+        return view(env('THEME') . '.catalog')->with('products', $catalogs);
 
     }
 
-    public function getProducts() {
-        $catalogs = $this->p_rep->get('*',2,1);
+    public function show($slug)
+    {
+
+        $product = $this->p_rep->one($slug);
+        return view(env('THEME') . '.product')->with('product', $product);
+
+    }
+
+    public function getProducts($sort)
+    {
+        $catalogs = $this->p_rep->get('*', 2, 1, $sort);
         return $catalogs;
     }
-    
+
+
 }
