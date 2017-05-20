@@ -14,7 +14,7 @@ class CreateTriggerDelete extends Migration
     {
         DB::unprepared('
        CREATE TRIGGER `delete_product` BEFORE DELETE ON `Products` FOR EACH ROW 
-            UPDATE  `test.item`.`check_cache` SET  `data` = 1 WHERE  `check_cache`.`id` =1;
+            UPDATE `check_cache` SET  `data` = 1 WHERE  `check_cache`.`id` =1;
         ');
     }
 

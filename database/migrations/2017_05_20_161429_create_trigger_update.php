@@ -14,7 +14,7 @@ class CreateTriggerUpdate extends Migration
     {
         DB::unprepared('
        CREATE TRIGGER `update_product` BEFORE UPDATE ON `Products` FOR EACH ROW 
-           UPDATE  `test.item`.`check_cache` SET  `data` = 1 WHERE  `check_cache`.`id` =1;
+           UPDATE `check_cache` SET  `data` = 1 WHERE  `check_cache`.`id` =1;
         ');
     }
 

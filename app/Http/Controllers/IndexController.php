@@ -51,7 +51,7 @@ class IndexController extends Controller
             $catalogs->setPath('?sort=' . $sort['sort']);
         }
 
-        return view(env('THEME') . '.catalog')->with('products', $catalogs);
+        return view(Config::get('settings.theme') . '.catalog')->with('products', $catalogs);
 
     }
 
@@ -69,7 +69,7 @@ class IndexController extends Controller
         });
 
 
-        return view(env('THEME') . '.product')->with('product', $product);
+        return view(Config::get('settings.theme') . '.product')->with('product', $product);
 
     }
 
