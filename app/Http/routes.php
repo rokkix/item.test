@@ -14,7 +14,7 @@
 
 
 Route::get('/product/{slug}',['uses'=>'IndexController@show','as'=>'slug'])->where('slug','[\w-]+');
-Route::get('/catalog',['uses'=>'IndexController@index','as'=>'cat']);
+Route::get('/catalog',['uses'=>'IndexController@index','as'=>'cat'])->where('cat','[\w-]+');;
 
 
 
