@@ -23,10 +23,10 @@ class IndexController extends Controller
         $sort = $request->only('sort');
 
         $catalogs = $this->getProducts($sort);
-        $n = $request->only('sort');
-        if (isset($n['sort'])) {
 
-            $catalogs->setPath('?sort=' . $n['sort']);
+        if (isset($sort['sort'])) {
+
+            $catalogs->setPath('?sort=' . $sort['sort']);
         }
 
         return view(env('THEME') . '.catalog')->with('products', $catalogs);
