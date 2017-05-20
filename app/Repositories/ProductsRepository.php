@@ -8,7 +8,7 @@
 
 namespace App\Repositories;
 
-
+use Illuminate\Support\Facades\DB;
 use App\Product;
 
 class ProductsRepository
@@ -61,5 +61,22 @@ class ProductsRepository
         return $builder->first();
 
 
+    }
+
+    /**
+     * check update data product
+     * @return $boolen flag update data product
+     */
+    public function checkUpdateProduct()
+    {
+        return DB::select('select data from check_cache WHERE id = ?', [1])[0];
+
+    }
+
+    public function updateCheckCache()
+    {
+        DB::table('check_cache')
+            ->where('id', 1)
+            ->update(['data' => 0]);
     }
 }

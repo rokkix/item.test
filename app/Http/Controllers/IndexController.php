@@ -12,17 +12,22 @@ use App\Http\Requests;
 
 class IndexController extends Controller
 {
-
     protected $p_rep;
+    protected $update_cache;
 
     /**
+     * check update product and update cache
      * IndexController constructor.
      * @param ProductsRepository $p_rep
      */
-
     public function __construct(ProductsRepository $p_rep)
     {
         $this->p_rep = $p_rep;
+        $this->update_cache = $this->p_rep->checkUpdateProduct();
+        if($this->update_cache->data) {
+            Cache::flush();
+            $this->p_rep->updateCheckCache();
+        }
     }
 
 
@@ -34,7 +39,6 @@ class IndexController extends Controller
     public function index(Requests\ProductRequest $request)
     {
         $sort = $request->only('sort');
-
         $catalogs = Cache::rememberForever('sort:' . implode($request->only('sort', 'page')), function () use ($sort) {
             $res = $this->getProducts($sort);
             return $res;
