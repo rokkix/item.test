@@ -73,10 +73,16 @@ class ProductsRepository
 
     }
 
+
+    /**
+     * set data = 0 after delete cache
+     * @return bool
+     */
     public function updateCheckCache()
     {
         DB::table('check_cache')
             ->where('id', 1)
             ->update(['data' => 0]);
+        return TRUE;
     }
 }
