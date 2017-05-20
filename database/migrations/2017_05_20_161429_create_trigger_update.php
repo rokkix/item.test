@@ -13,7 +13,7 @@ class CreateTriggerUpdate extends Migration
     public function up()
     {
         DB::unprepared('
-       CREATE TRIGGER `test` BEFORE UPDATE ON `Products` FOR EACH ROW 
+       CREATE TRIGGER `update_product` BEFORE UPDATE ON `Products` FOR EACH ROW 
             UPDATE `test.item`.`check_cache` SET `data` = 1 WHERE `test`.`id` = 1
         ');
     }
@@ -25,6 +25,6 @@ class CreateTriggerUpdate extends Migration
      */
     public function down()
     {
-        //
+        DB::unprepared('DROP TRIGGER `update_product`');
     }
 }

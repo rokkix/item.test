@@ -13,7 +13,7 @@ class CreateTriggerAdd extends Migration
     public function up()
     {
         DB::unprepared('
-       CREATE TRIGGER `test` BEFORE DELETE ON `Products` FOR EACH ROW 
+       CREATE TRIGGER `add_product` BEFORE INSERT ON `Products` FOR EACH ROW 
             UPDATE `test.item`.`check_cache` SET `data` = 1 WHERE `test`.`id` = 1
         ');
     }
@@ -25,6 +25,6 @@ class CreateTriggerAdd extends Migration
      */
     public function down()
     {
-        //
+        DB::unprepared('DROP TRIGGER `add_product`');
     }
 }
